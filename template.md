@@ -107,3 +107,58 @@ Data summary
 | pups_born_alive |         0 |             1 |  7.35 | 1.76 |   3 |   6 |   8 |   8 |   11 | ▁▃▂▇▁ |
 | pups_dead_birth |         0 |             1 |  0.33 | 0.75 |   0 |   0 |   0 |   0 |    4 | ▇▂▁▁▁ |
 | pups_survive    |         0 |             1 |  6.41 | 2.05 |   1 |   5 |   7 |   8 |    9 | ▁▃▂▇▇ |
+
+Let’s now fix the missing data vlue
+
+``` r
+read_csv("data/FAS_litters.csv", na = c("NA", ".", ""), skip = 5)
+```
+
+    ## New names:
+    ## Rows: 44 Columns: 8
+    ## ── Column specification
+    ## ──────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (2): Con7, #4/2/95/3-3 dbl (6): NA...3, NA...4, 20, 6...6, 0, 6...8
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+    ## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    ## • `NA` -> `NA...3`
+    ## • `NA` -> `NA...4`
+    ## • `6` -> `6...6`
+    ## • `6` -> `6...8`
+
+    ## # A tibble: 44 × 8
+    ##    Con7  `#4/2/95/3-3`   NA...3 NA...4  `20` `6...6`   `0` `6...8`
+    ##    <chr> <chr>            <dbl>  <dbl> <dbl>   <dbl> <dbl>   <dbl>
+    ##  1 Con7  #2/2/95/3-2       NA       NA    20       6     0       4
+    ##  2 Con7  #1/5/3/83/3-3/2   NA       NA    20       9     0       9
+    ##  3 Con8  #3/83/3-3         NA       NA    20       9     1       8
+    ##  4 Con8  #2/95/3           NA       NA    20       8     0       8
+    ##  5 Con8  #3/5/2/2/95       28.5     NA    20       8     0       8
+    ##  6 Con8  #5/4/3/83/3       28       NA    19       9     0       8
+    ##  7 Con8  #1/6/2/2/95-2     NA       NA    20       7     0       6
+    ##  8 Con8  #3/5/3/83/3-3-2   NA       NA    20       8     0       8
+    ##  9 Con8  #2/2/95/2         NA       NA    19       5     0       4
+    ## 10 Con8  #3/6/2/2/95-3     NA       NA    20       7     0       7
+    ## # ℹ 34 more rows
+
+``` r
+pups_df = 
+  read_csv("data/FAS_pups.csv",
+           skip = 3,
+           na = c("NA", ".", "")
+  )
+```
+
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+pups_df = 
+  janitor::clean_names(pups_df)
+```

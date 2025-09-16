@@ -38,3 +38,19 @@ Sometimes skimming data is near?
 skimr::skim(litters_df)
 ```
 
+Let's now fix the missing data vlue
+
+```{r}
+read_csv("data/FAS_litters.csv", na = c("NA", ".", ""), skip = 5)
+```
+
+```{r}
+pups_df = 
+  read_csv("data/FAS_pups.csv",
+           skip = 3,
+           na = c("NA", ".", "")
+  )
+pups_df = 
+  janitor::clean_names(pups_df)
+```
+
