@@ -190,4 +190,20 @@ let’s now read a SAS file. We’ll now import the pulse dataset
 ``` r
 pulse_df =
   read_sas("data/public_pulse_data.sas7bdat")
+
+pulse_df =
+  janitor::clean_names(pulse_df)
+```
+
+why do I hate read read.csv so much???
+
+``` r
+litters_df_base =
+  read.csv("data/FAS_litters.csv")
+```
+
+what about data exporting
+
+``` r
+write_csv(fotr_df, "data/fort_df.csv")
 ```
