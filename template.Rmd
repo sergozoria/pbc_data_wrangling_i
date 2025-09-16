@@ -83,3 +83,10 @@ pulse_df =
   janitor::clean_names(pulse_df)
 ```
 
+why do I hate read read.csv so much???
+
+```{r, eval = FALSE}
+litters_df_base =
+  read.csv("data/FAS_litters.csv")
+```
+
