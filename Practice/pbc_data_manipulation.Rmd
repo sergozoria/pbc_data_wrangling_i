@@ -1,0 +1,10 @@
+---
+title: "Data Manipulation - Data Wrangling I"
+date: September 18th, 2025
+output: github_document
+---
+
+```{r}
+library(tidyverse)
+```
+
