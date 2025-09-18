@@ -335,3 +335,5 @@ filter(litters_df, group %in% c("Con7", "Mod8"))
     ## 13 Mod8  #2/95/2         28.5       44.5                 20               9
     ## 14 Mod8  #82/4           33.4       52.7                 20               8
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+## let’s now take a look at mutate, which allows me to create additional variables or modify existing variables

@@ -85,4 +85,6 @@ filter(litters_df, group =="Con7")
 filter(litters_df, group %in% c("Con7", "Mod8"))
 ```
 
+## let's now take a look at mutate, which allows me to create additional variables or modify existing variables
+
 
