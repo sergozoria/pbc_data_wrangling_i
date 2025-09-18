@@ -100,3 +100,45 @@ filter(pups_df, sex == 1)
 filter(pups_df, sex == 2, pd_walk < 11)
 ```
 
+## mutating variables (create new + modify exisiting)
+
+```{r}
+mutate(
+  litters_df,
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+  )
+```
+
+## let's arrange to arrange things
+
+```{r}
+arrange(litters_df, pups_born_alive)
+arrange(litters_df, desc(group), pups_born_alive)
+
+arrange(litters_df, gd0_weight)
+```
+
+# using pipes operators to put things together. Use pipes to avoid nesting codes
+
+```{r}
+litters_df =
+  read_csv("data/FAS_litters.csv", na = c("NA", ".", "")) |>
+  janitor::clean_names() |>
+  select(group, litter_number, starts_with("gd")) |> 
+  drop_na() |> 
+  mutate(
+    wt_gain = gd18_weight - gd0_weight
+  )
+```
+
+```{r}
+pups_df =
+  read_csv("data/FAS_pups.csv", na = c("NA", ".", ""), skip = 3) |>
+  janitor::clean_names() |> 
+  filter(sex == 1) |> 
+  select(-pd_ears) |> 
+  mutate(pd_pivot_gt7 = pd_pivot >= 7)
+```
+
+
