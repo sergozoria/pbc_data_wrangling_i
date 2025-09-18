@@ -17,14 +17,86 @@ litters_df =
 
 ```{r}
 pups_df =
-  read_csv("data/FAS_pups.csv", na = c("NA", ".", ""))
+  read_csv("data/FAS_pups.csv", na = c("NA", ".", ""), skip = 3)
 pups_df =
   janitor::clean_names(pups_df)
 ```
 
-# select variables from my dataframe
+# select specific variables from my dataframe
 
 ```{r}
+select(litters_df, group, litter_number, gd0_weight)
+```
 
+# selects a range of variables
+
+```{r}
+select(litters_df, group:gd_of_birth)
+```
+
+select by removal in df
+
+```{r}
+select(litters_df, -group)
+select(litters_df, -(group:gd_of_birth))
+```
+
+select by prefix
+
+```{r}
+select(litters_df, group, starts_with("gd"))
+```
+
+Let's now rearrange by selecting 
+
+```{r}
+select(litters_df, starts_with("gd"), group)
+select(litters_df, litter_number, everything())
+
+relocate(litters_df, litter_number)
+```
+
+rename by selecting
+
+```{r}
+select(litters_df, GROUP = group, everything())
+rename(litters_df, GROUP = group)
+```
+
+what if I only select one variable
+
+```{r}
+select(litters_df, group)
+
+pull(litters_df, group)
+litters_df$group
+```
+
+```{r}
+select(pups_df, litter_number, pd_ears, sex)
+```
+
+fiter options
+
+```{r}
+filter(litters_df, pups_born_alive != 6)
+```
+
+Match to a set
+
+```{r}
+filter(litters_df, group %in% c("Con7", "Mod8"))
+```
+
+Let's filter our missing rows with drop_na() for the entire dataset or for whatever columsn you care about
+
+```{r}
+drop_na(litters_df)
+drop_na(litters_df, gd0_weight)
+```
+
+```{r}
+filter(pups_df, sex == 1)
+filter(pups_df, sex == 2, pd_walk < 11)
 ```
 
