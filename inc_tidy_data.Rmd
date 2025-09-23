@@ -88,3 +88,38 @@ lotr_df =
 
 ```
 
+Joining datasets. Let's import first
+
+```{r}
+litters_df =
+  read_csv("./data/FAS_litters.csv", na = c("NA", ".", "")) |> 
+  janitor::clean_names() |> 
+  mutate(wt_gain = gd18_weight - gd0_weight) |> 
+  separate(
+    group, into = c("dose", "date_of_tx"), sep = 3
+  )
+```
+
+Let's import the pups dataset
+
+```{r}
+pups_df =
+  read_csv("./data/FAS_pups.csv", na = c("NA", ".", ""), skip = 3) |> 
+  janitor::clean_names() |> 
+  mutate(
+    sex = case_match(
+      sex,
+      1 ~ "male",
+      2 ~ "female"
+    )
+  )
+```
+
+Let's now join them together. Make sure to include the by function.
+
+```{r}
+fas_df =
+  left_join(pups_df, litters_df, by = "litter_number") |> 
+  relocate(litter_number, dose, date_of_tx)
+```
+
