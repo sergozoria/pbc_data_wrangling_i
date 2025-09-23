@@ -1,0 +1,48 @@
+---
+title: "Tidy Data - Data Wrangling I"
+date: September 23rd, 2025
+output: github_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+## let's take a look to `pivot_longer`
+
+```{r}
+pulse_data =
+  haven::read_sas("./data/public_pulse_data.sas7bdat") |> 
+  janitor::clean_names()
+```
+
+Let's now go from wide format to long format
+
+```{r}
+pulse_data_tidy =
+  pulse_data |> 
+  pivot_longer(
+    bdi_score_bl:bdi_score_12m, 
+    names_to = "visit",
+    names_prefix = "bdi_score_",
+    values_to = "bdi"
+  )
+```
+
+Let's rewrite, combine, and extend to add a mutate
+
+```{r}
+pulse_data =
+  haven::read_sas("./data/public_pulse_data.sas7bdat") |> 
+  janitor::clean_names() |> 
+  pivot_longer(
+    bdi_score_bl:bdi_score_12m, 
+    names_to = "visit",
+    names_prefix = "bdi_score_",
+    values_to = "bdi"
+  ) |> 
+  relocate(id, visit) |> 
+  mutate(visit = recode(visit, "bl" = "00m"))
+
+```
+
